@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8"/>
+<title>Selenium Generator</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.2/cosmo/bootstrap.min.css"/>
+</head>
+<body>
+
+<div class="container">
+<header class="page-header">
+<h1>Selenium Generator</h1>
+<p class="lead">バリエーションテストのテストケースを生成します</p>
+</header>
+
+<section id="getting-started">
+<p>Selenium IDEで作成したシナリオを繰り返し、バリエーションテストのテストケースを生成します。</p>
+<p><img src="20110115_Selenium_Generator.png" alt="流れ" /></p>
+</section>
+
+<section id="writing-scenario">
+<h2>シナリオを作る</h2>
+<p>Selenium IDEで作成したシナリオを貼り付けてください。</p>
+<div class="row">
+<div class="col-md-6">
+<textarea data-bind="value: scenarioHtml" class="form-control" rows="16"></textarea>
+<div class="help-block">※例として「はてな検索シナリオ」が入っています。</div>
+</div>
+<div class="col-md-6">
+<table data-bind="html: scenarioHtml" class="table table-striped"></table>
+</div>
+</div>
+</section>
+
+<section id="writing-testdata">
+<h2>テストデータを作る</h2>
+<p>Excelなどで作成した試験項目表を貼り付けてください。</p>
+<div class="form-group">
+    <label class="radio-inline">
+        <input type="radio" name="testDataFormat" value="csv" data-bind="checked: testDataFormat" /> カンマ区切り
+    </label>
+    <label class="radio-inline">
+        <input type="radio" name="testDataFormat" value="tsv" data-bind="checked: testDataFormat" /> タブ区切り
+    </label>
+</div>
+<textarea data-bind="value: testDataText" class="form-control" rows="16"></textarea>
+<span class="help-block">※例として「文字化け試験項目」が入っています。</span>
+</section>
+
+<section id="choose-variables">
+<h2>変数を選ぶ</h2>
+<p>シナリオから変数項目を選んでください。</p>
+<table data-bind="with: scenario" class="table">
+    <tbody data-bind="foreach: rows">
+        <tr data-bind="foreach: columns">
+            <td data-bind="if: value">
+                <div data-bind="text: value"></div>
+                <select data-bind="value: variableIndex" class="form-control">
+                    <option value="">-</option>
+                    <optgroup label="テストデータの" data-bind="foreach: $root.variableOptions">
+                        <option data-bind="text: ($index()+1) + '列目に置換する', value: $index"></option>
+                    </optgroup>
+                </select>
+            </td>
+        </tr>
+    </tbody>
+</table>
+</section>
+
+<div><img alt="↓" src="arrow_down_1.png" class="center-block" /></div>
+
+<section id="generating-testcases">
+<h2>完成</h2>
+<div class="row">
+<div class="col-md-6">
+<p>生成されたHTMLをSelenium IDEに貼り付けてください。</p>
+<textarea data-bind="value: expandedHtml" class="form-control" rows="20"></textarea>
+</div>
+<div class="col-md-6">
+<table data-bind="html: expandedHtml" class="table table-striped"></table>
+</div>
+</div>
+</section>
+
+<footer>
+<div>&copy; hidetake.org, 2008-2014.</div>
+<div>Using <a href="http://liosk.blog103.fc2.com/blog-entry-75.html">CSV parser</a> library.</div>
+</footer>
+</div>
+<script src="//code.jquery.com/jquery-3.1.0.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/knockout/3.4.0/knockout-min.js"></script>
+<script src="app.js"></script>
+
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-3232369-2', 'auto');
+ga('send', 'pageview');
+</script>
+
+</body>
+</html>
